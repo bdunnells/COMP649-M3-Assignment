@@ -1,24 +1,4 @@
-/*****************************************************************
-    Asynchronous Photo Album
-    Student Starter Code
-
-    Complete each TODO.
-
-    Requirements:
-    ✔ Use async/await
-    ✔ Use fetch()
-    ✔ Use try/catch
-    ✔ Display only the first 25 photos
-******************************************************************/
-
-// *********************************************
-// TODO #1
-// Select the status element
-// TODO #2
-// Select the photo album container
-// *********************************************
-
-// *********************************************
+ // *********************************************
 // TODO #3
 // Create an async function named loadPhotos()
 // *********************************************
@@ -28,30 +8,77 @@ async function loadPhotos() {
         // TODO #4
         // Fetch the first 25 photos from:
         // https://jsonplaceholder.typicode.com/photos?_limit=25
+	// BD: since the above link is broken, according to Zak
+	//    	We should use this link instead : https://picsum.photos/seed/${photo.id}/150/150
+	//	e.g first pic : https://picsum.photos/seed/1/150/150
+	//
+	//     	const image = document.createElement('img')
+	//	image.src = `https://picsum.photos/seed/${photo.id}/150/150`
+	//
+	// 	Although we could still utilize the JSON info (e.g albumId, id, and title for this assignment
+	//	{
+    	//		"albumId": 1,
+    	//		"id": 1,
+    	//		"title": "accusamus beatae ad facilis cum similique qui sunt",
+    	//		"url": "https://via.placeholder.com/600/92c952",
+    	//		"thumbnailUrl": "https://via.placeholder.com/150/92c952"
+  	//	},
         // *********************************************
-
+	// For fetching the first 25 photos from: https://jsonplaceholder.typicode.com/photos?_limit=25
+	const url = "https://jsonplaceholder.typicode.com/photos?_limit=25"
+	const url2 = "https://picsum/photos"
+	
+	// Requirement: create async function loadPhotos() using fetch & await
+		const response = await fetch(url)
+		
+	
         // *********************************************
         // TODO #5
         // Verify that the response was successful.
         // If not, throw an Error.
         // *********************************************
+		if (!response.ok) {
+			throw new Error('HTTPS error! status: ${response.status}')
+		}
 
         // *********************************************
         // TODO #6
         // Convert the response into JSON.
         // *********************************************
-
+		const data = await response.json()
+		return data
         // *********************************************
         // TODO #7
         // Remove the loading message.
+	// BD: on the index.html, the loading message looks like
+	//     <div id="status">Loading photos...</div>
         // *********************************************
-
+	window.addEventListener('load', () => {
+		const loader = document.getElementById('status')
+		if (loader {
+			loader.remove() //completely remove element from DOM
+		}
+	})
         // *********************************************
         // TODO #8
         // Display the photos.
         // *********************************************
-    } catch(e) {
-        console.error(event)
+	
+	const photosUrls = 'https://picsum.photos'
+	const gallery = document.getElementById('photoAlbum')
+
+	photosUrls.forEach(url2 => {
+		id = 1
+		//create a new img element for index.html
+		const image = document.createElement('img')
+		image.src = `https://picsum.photos/seed/${id}/150/150`
+		gallery.appendChild(img)
+	
+	
+    } catch(error) {
+        //console.error(event)
+	console.error('Fetch error: ', error)
+   
         // *********************************************
         // TODO #9
         // Display a friendly error message.
