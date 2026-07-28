@@ -1,0 +1,91 @@
+/*****************************************************************
+    Asynchronous Photo Album
+    Student Starter Code
+
+    Complete each TODO.
+
+    Requirements:
+    ✔ Use async/await
+    ✔ Use fetch()
+    ✔ Use try/catch
+    ✔ Display only the first 25 photos
+******************************************************************/
+
+// *********************************************
+// TODO #1
+// Select the status element
+// TODO #2
+// Select the photo album container
+// *********************************************
+
+// *********************************************
+// TODO #3
+// Create an async function named loadPhotos()
+// *********************************************
+async function loadPhotos() {
+    try {
+        // *********************************************
+        // TODO #4
+        // Fetch the first 25 photos from:
+        // https://jsonplaceholder.typicode.com/photos?_limit=25
+        // *********************************************
+
+        // *********************************************
+        // TODO #5
+        // Verify that the response was successful.
+        // If not, throw an Error.
+        // *********************************************
+
+        // *********************************************
+        // TODO #6
+        // Convert the response into JSON.
+        // *********************************************
+
+        // *********************************************
+        // TODO #7
+        // Remove the loading message.
+        // *********************************************
+
+        // *********************************************
+        // TODO #8
+        // Display the photos.
+        // *********************************************
+    } catch(e) {
+        console.error(event)
+        // *********************************************
+        // TODO #9
+        // Display a friendly error message.
+        // *********************************************
+    }
+}
+
+// *********************************************
+// TODO #10
+// Complete this function.
+// Loop through the photos.
+// Create a photo card.
+// Append it to the page.
+// *********************************************
+function displayPhotos(photos) {
+
+}
+
+// *********************************************
+// TODO #11
+// Complete this function.
+//
+// Each card should contain:
+//
+// - Thumbnail image
+// - Title
+//
+// Return the completed card.
+// *********************************************
+function createPhotoCard(photo) {
+
+}
+
+// *********************************************
+// TODO #12
+// Start the application.
+// *********************************************
