@@ -1,7 +1,3 @@
- // *********************************************
-// TODO #3
-// Create an async function named loadPhotos()
-// *********************************************
 async function loadPhotos() {
     try {
         // *********************************************
@@ -29,7 +25,7 @@ async function loadPhotos() {
 	const url2 = "https://picsum/photos"
 	
 	// Requirement: create async function loadPhotos() using fetch & await
-		const response = await fetch(url)
+		const response = await fetch(url2)
 		
 	
         // *********************************************
@@ -63,16 +59,21 @@ async function loadPhotos() {
         // TODO #8
         // Display the photos.
         // *********************************************
+	const url2 = "https://picsum/photos"
 	
 	const photosUrls = 'https://picsum.photos'
 	const gallery = document.getElementById('photoAlbum')
 
+	//for loop running from 1 to 25 only
 	photosUrls.forEach(url2 => {
-		id = 1
+		//id = 1
 		//create a new img element for index.html
 		const image = document.createElement('img')
-		image.src = `https://picsum.photos/seed/${id}/150/150`
+		//image.src = `https://picsum.photos/seed/${id}/150/150`
+		image.src = `https://picsum.photos/seed/1/150/150`
 		gallery.appendChild(img)
+		//id += 1
+	})
 	
 	
     } catch(error) {
@@ -85,34 +86,3 @@ async function loadPhotos() {
         // *********************************************
     }
 }
-
-// *********************************************
-// TODO #10
-// Complete this function.
-// Loop through the photos.
-// Create a photo card.
-// Append it to the page.
-// *********************************************
-function displayPhotos(photos) {
-
-}
-
-// *********************************************
-// TODO #11
-// Complete this function.
-//
-// Each card should contain:
-//
-// - Thumbnail image
-// - Title
-//
-// Return the completed card.
-// *********************************************
-function createPhotoCard(photo) {
-
-}
-
-// *********************************************
-// TODO #12
-// Start the application.
-// *********************************************
