@@ -1,0 +1,109 @@
+/*****************************************************************
+    Asynchronous Photo Album
+    Student Starter Code
+
+    Complete each TODO.
+
+    Requirements:
+    ✔ Use async/await
+    ✔ Use fetch()
+    ✔ Use try/catch
+    ✔ Display only the first 25 photos
+******************************************************************/
+// *********************************************
+// TODO #1
+// Select the status element
+const status = document.getElementById('status')
+
+// TODO #2
+// Select the photo album container
+// *********************************************
+// Select the target container
+const container = document.getElementById('photoAlbum')
+
+ 
+// *********************************************
+// TODO #3
+// Create an async function named loadPhotos()
+// *********************************************
+async function loadAllPhotos() {
+
+        window.addEventListener('load', () => {
+			const loader = document.getElementById('status')
+			if (loader) {
+				loader.remove() //completely remove element from DOM
+			}
+		})
+      // Base URL and different parameters/identifiers
+      const baseUrl = 'https://picsum.photos/seed/';
+
+      // doesn't work, put on hold 
+      //const max = 25
+      //const photoId = [];
+      //for (let i = 1; i < max; i++) {
+      //  photoId.push(i)
+      //}
+      const photoIds = ['1', '2', '3', '4','5', '6', '7', '8','9', '10', 
+        '12', '13', '14', '15', '16', '17', '19', '20', '21', '22', '23', '24', '25']; 
+        
+      const container = document.getElementById('photoAlbum');
+    
+      try {
+        
+        // Map parameters to fetch requests in parallel
+        const promises = photoIds.map(id => fetch(`${baseUrl}${id}/150/150`));
+        const responses = await Promise.all(promises);
+
+        // Convert all responses to blobs asynchronously
+        const blobPromises = responses.map(res => {
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+          return res.blob();
+        });
+        
+        const blobs = await Promise.all(blobPromises);
+         
+        // Create image elements and attach to a document fragment
+        blobs.forEach((blob, index) => {
+            
+          const imgURL = URL.createObjectURL(blob);
+          
+          const img = document.createElement('img');
+          img.src = imgURL;
+          img.alt = `Photo ${photoIds[index]}`;
+          img.style.width = '100%';
+          img.style.display = 'block';
+          //createPhotoCard()
+        
+        // Create the card wrapper
+        const card = document.createElement('div');
+        card.style.border = '1px solid #ccc';
+        card.style.borderRadius = '7px';
+        card.style.width = '180px';
+        card.style.length = '300px'
+        card.style.overflow = 'hidden';
+        card.style.boxShadow = '0 3px 7px rgba(0,0,0,0.1)';
+
+        // Create and style the text section
+        const textContainer = document.createElement('div');
+        textContainer.style.padding = '16px';
+
+        const title = document.createElement('h6');
+        title.textContent = 'title HERE';
+        title.style.margin = '0 0 8px 0';
+        
+        textContainer.appendChild(title);
+        
+        card.appendChild(img);
+        card.appendChild(textContainer);
+        container.appendChild(card);
+         
+        });
+         
+      } catch (error) {
+        console.error('Failed to load photos:', error);
+      }
+}
+
+loadAllPhotos();
+ 
+
