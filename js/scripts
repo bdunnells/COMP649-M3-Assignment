@@ -1,88 +1,124 @@
-async function loadPhotos() {
-    try {
-        // *********************************************
-        // TODO #4
-        // Fetch the first 25 photos from:
-        // https://jsonplaceholder.typicode.com/photos?_limit=25
-	// BD: since the above link is broken, according to Zak
-	//    	We should use this link instead : https://picsum.photos/seed/${photo.id}/150/150
-	//	e.g first pic : https://picsum.photos/seed/1/150/150
-	//
-	//     	const image = document.createElement('img')
-	//	image.src = `https://picsum.photos/seed/${photo.id}/150/150`
-	//
-	// 	Although we could still utilize the JSON info (e.g albumId, id, and title for this assignment
-	//	{
-    	//		"albumId": 1,
-    	//		"id": 1,
-    	//		"title": "accusamus beatae ad facilis cum similique qui sunt",
-    	//		"url": "https://via.placeholder.com/600/92c952",
-    	//		"thumbnailUrl": "https://via.placeholder.com/150/92c952"
-  	//	},
-        // *********************************************
-	// For fetching the first 25 photos from: https://jsonplaceholder.typicode.com/photos?_limit=25
-	const url = "https://jsonplaceholder.typicode.com/photos?_limit=25"
-	const url2 = "https://picsum/photos"
-	
-	// Requirement: create async function loadPhotos() using fetch & await
-		const response = await fetch(url2)
-		
-	
-        // *********************************************
-        // TODO #5
-        // Verify that the response was successful.
-        // If not, throw an Error.
-        // *********************************************
-		if (!response.ok) {
-			throw new Error('HTTPS error! status: ${response.status}')
-		}
+ /*****************************************************************
+    Asynchronous Photo Album
+    Student Starter Code
 
-        // *********************************************
-        // TODO #6
-        // Convert the response into JSON.
-        // *********************************************
-		const data = await response.json()
-		return data
-        // *********************************************
-        // TODO #7
-        // Remove the loading message.
-	// BD: on the index.html, the loading message looks like
-	//     <div id="status">Loading photos...</div>
-        // *********************************************
-	window.addEventListener('load', () => {
-		const loader = document.getElementById('status')
-		if (loader {
-			loader.remove() //completely remove element from DOM
-		}
-	})
-        // *********************************************
-        // TODO #8
-        // Display the photos.
-        // *********************************************
-	const url2 = "https://picsum/photos"
-	
-	const photosUrls = 'https://picsum.photos'
-	const gallery = document.getElementById('photoAlbum')
+    Complete each TODO.
 
-	//for loop running from 1 to 25 only
-	photosUrls.forEach(url2 => {
-		//id = 1
-		//create a new img element for index.html
-		const image = document.createElement('img')
-		//image.src = `https://picsum.photos/seed/${id}/150/150`
-		image.src = `https://picsum.photos/seed/1/150/150`
-		gallery.appendChild(img)
-		//id += 1
-	})
-	
-	
-    } catch(error) {
-        //console.error(event)
-	console.error('Fetch error: ', error)
-   
-        // *********************************************
-        // TODO #9
-        // Display a friendly error message.
-        // *********************************************
-    }
+    Requirements:
+    ✔ Use async/await
+    ✔ Use fetch()
+    ✔ Use try/catch
+    ✔ Display only the first 25 photos
+******************************************************************/
+//GLOBAL Variable
+//photo URLs
+const photoUrl = 'https://picsum.photos/seed/'
+const titleUrl = 'https://jsonplaceholder.typicode.com/photos/'
+
+// *********************************************
+// TODO #1
+// Select the status element
+const status = document.getElementById('status')
+
+// TODO #2
+// Select the photo album container
+// *********************************************
+// Select the target container
+const container = document.getElementById('photoAlbum')
+
+ 
+// *********************************************
+// TODO #3
+// Create an async function named loadPhotos()
+// *********************************************
+async function loadAllPhotos() {
+
+        window.addEventListener('load', () => {
+			const loader = document.getElementById('status')
+			if (loader) {
+				loader.remove() //completely remove element from DOM
+			}
+		})
+     
+      // doesn't work, put on hold 
+      //const max = 25
+      //const photoId = [];
+      //for (let i = 1; i < max; i++) {
+      //  photoId.push(i)
+      //}
+      const photoIds = ['1', '2', '3', '4','5', '6', '7', '8','9', '10', 
+                        '11','12', '13', '14', '15', '16', '17', '18', '19', '20', 
+                        '21', '22', '23', '24', '25']; 
+        
+    
+      try {
+        const titlePromises = photoIds.map(album => fetch(`${titleUrl}${album}`)) 
+        const titleResp = await Promise.all(titlePromises)
+
+        //const element = document.getElementById('h6');
+     
+        // Map parameters to fetch requests in parallel
+        const promises = photoIds.map(id => fetch(`${photoUrl}${id}/150/150`));
+        const responses = await Promise.all(promises)
+
+        // Convert all responses to blobs asynchronously
+        const blobPromises = responses.map(res => {
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+          return res.blob();
+        });
+        const blobResp = await Promise.all(blobPromises);
+        
+        const targetKey = "title"
+        const value = titleResp.targetKey //get [object Response] error
+
+        blobResp.forEach((blob, titleResp, value, index) => {
+          const imgURL = URL.createObjectURL(blob);
+          
+          const img = document.createElement('img');
+          img.src = imgURL;
+          img.alt = `Photo ${photoIds[index]}`;
+          img.style.width = '100%';
+          img.style.display = 'block';
+           
+        // Create the card wrapper
+        const card = document.createElement('div');
+        card.style.border = '1px solid #ccc';
+        card.style.borderRadius = '7px';
+        card.style.width = '180px';
+        card.style.length = '300px'
+        card.style.overflow = 'hidden';
+        card.style.boxShadow = '0 3px 7px rgba(0,0,0,0.1)';
+
+        // Create and style the text section
+        const textContainer = document.createElement('div');
+        textContainer.style.padding = '16px';
+
+        const title = document.createElement('h6');
+        const element = document.getElementById('h6');
+        //titleResp = element.innerHTML  //not working
+        
+        // title.textContent = element.innerHTML, not working
+        //title.textContent = titleResp  //return index
+        title.textContent = titleResp
+        //title.textContent = value //get [object Blob]Error
+        
+
+        title.style.margin = '0 0 8px 0';
+        
+        //textContainer.appendChild(title);
+        textContainer.appendChild(title);
+        
+        card.appendChild(img);
+        card.appendChild(textContainer);
+        container.appendChild(card);
+         
+        });
+     
+         
+      } catch (error) {
+        console.error('Failed to load photos:', error);
+      }
 }
+
+loadAllPhotos();
+  
